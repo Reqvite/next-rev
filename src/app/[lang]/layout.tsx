@@ -5,13 +5,15 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { ReactNode } from "react";
 
-import { ServerError } from "@/feature";
+import { ServerError, ThemeSwitcher } from "@/feature";
 import AppProviders from "@/global/providers/AppProviders";
+import { Footer } from "@/sections";
 import { getStrapiMedia, getStrapiURL } from "@/shared/api/api-helpers";
 import { fetchAPI } from "@/shared/api/fetch-api";
 import { i18n } from "@/shared/config/i18n/i18n";
 import { FALLBACK_SEO } from "@/shared/const/fallbackSeo";
 import { PageParams } from "@/shared/types/pageParams";
+import { Navbar } from "@/widgets";
 
 import Error from "./error";
 
@@ -29,17 +31,17 @@ async function getGlobal(lang: string): Promise<any> {
 
   const urlParamsObject = {
     populate: [
-      "seo",
+      "metaData",
       "favicon",
-      "seo.metaImage",
+      "metaData.metaImage",
       "navbar.links",
       "navbar.links.children",
       "navbar.buttons",
-      "navbar.navbarLogo.logoImg",
+      "navbar.navbarLogo.img",
       "footer.footerLinks",
       "footer.footerLinks.children",
       "footer.legalLinks",
-      "footer.footerLogo.logoImg",
+      "footer.footerLogo.img",
     ],
     locale: lang,
   };
@@ -55,13 +57,13 @@ export async function generateMetadata({
 
   if (!meta.data) return FALLBACK_SEO;
 
-  const { seo, favicon } = meta.data.attributes;
+  const { metaData, favicon } = meta.data.attributes;
   const { url } = favicon.data.attributes;
-  const { url: openGraphUrl } = seo.metaImage.data.attributes;
+  const { url: openGraphUrl } = metaData.metaImage.data.attributes;
 
   return {
-    title: seo.metaTitle,
-    description: seo.metaDescription,
+    title: metaData.metaTitle,
+    description: metaData.metaDescription,
     icons: {
       icon: [new URL(url, getStrapiURL())],
     },
@@ -91,13 +93,12 @@ export default async function RootLayout({
   const { notificationBanner, navbar, footer } = global.data.attributes;
   // if (!navbar || !footer) return redirect("/");
   const navbarLogoUrl = getStrapiMedia(
-    navbar?.navbarLogo?.logoImg.data.attributes.url
+    navbar?.navbarLogo?.img.data.attributes.url,
   );
   const footerLogoUrl = getStrapiMedia(
-    footer?.footerLogo?.logoImg.data.attributes.url
+    footer?.footerLogo?.img.data.attributes.url,
   );
 
-  console.log(1);
   return (
     <html
       lang="en"
@@ -111,7 +112,7 @@ export default async function RootLayout({
             justifyContent={"space-between"}
             h={"100vh"}
           >
-            {/* <Navbar
+            <Navbar
               lang={params.lang}
               links={navbar.links}
               buttons={navbar.buttons}
@@ -126,8 +127,7 @@ export default async function RootLayout({
               footerLinks={footer.footerLinks}
               legalLinks={footer.legalLinks}
               socialLinks={footer.socialLinks}
-            /> */}
-            {<Box as="main">Text</Box>}
+            />
           </Flex>
         </AppProviders>
       </body>

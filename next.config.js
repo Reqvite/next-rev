@@ -6,7 +6,7 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 const nextConfig = {};
 
 function getFrontUrl(dev) {
-  return dev ? "http://localhost:3001" : "link";
+  return dev ? "http://localhost:3000" : "link";
 }
 
 function getApiUrl(dev) {
