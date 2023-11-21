@@ -2,6 +2,7 @@
 import { Box, Button, Flex, Heading, Img, Stack, Text } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 
+import { MBenefits } from "@/sections";
 import { getAnimationVariants } from "@/shared/animation/animation";
 import { getStrapiMedia } from "@/shared/api/api-helpers";
 import { ButtonLink } from "@/shared/types/components";
@@ -91,7 +92,7 @@ export const Hero = ({ data }: HeroProps) => {
                   as={"a"}
                   cursor={"pointer"}
                   variant={variant}
-                  onClick={href}
+                  href={href}
                 >
                   {label}
                 </Button>
