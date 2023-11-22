@@ -7,13 +7,12 @@ import {
   HStack,
   Icon,
   Image,
-  Link,
-  Skeleton,
   Stack,
   Text,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import { forwardRef } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { FaChevronRight } from "react-icons/fa";
 
 import { getStrapiMedia } from "@/shared/api/api-helpers";
@@ -29,8 +28,10 @@ const MLink = motion(Link);
 
 const CategoryCard = (props: Props) => {
   const { category, rootProps } = props;
+  const router = useRouter();
   const { title, slug, description, img, linkTitle } = category;
   const categoryImg = getStrapiMedia(img.data.attributes.url);
+
   return (
     <MBox
       h={"full"}
@@ -45,7 +46,12 @@ const CategoryCard = (props: Props) => {
       whileTap={{ scale: 0.99 }}
       {...rootProps}
     >
-      <MLink href={`/categories/${slug}`}>
+      <Link
+        href={{
+          pathname: `/search`,
+          query: { params: slug },
+        }}
+      >
         <Image
           src={categoryImg || ""}
           height="full"
@@ -82,7 +88,7 @@ const CategoryCard = (props: Props) => {
             </HStack>
           </Stack>
         </Flex>
-      </MLink>
+      </Link>
     </MBox>
   );
 };

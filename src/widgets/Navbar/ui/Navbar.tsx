@@ -51,7 +51,7 @@ export const Navbar = memo((props: NavbarProps) => {
         base: themeBg,
         md: isMainPage ? "transparent" : themeBg,
       }}
-      position={"fixed"}
+      position={"absolute"}
       zIndex={"var(--chakra-zIndices-navbar)"}
       width="100%"
       {...animationNavbar}
@@ -101,7 +101,7 @@ export const Navbar = memo((props: NavbarProps) => {
             flex={{ base: 1, md: 0 }}
             justify={"flex-end"}
             direction={"row"}
-            spacing={6}
+            spacing={3}
           >
             {buttons.map(({ href, label, variant, id }) => (
               <Button
@@ -116,7 +116,7 @@ export const Navbar = memo((props: NavbarProps) => {
             ))}
           </Stack>
         )}
-        <ButtonGroup>
+        <ButtonGroup ml={5}>
           <ThemeSwitcher />
         </ButtonGroup>
       </Flex>

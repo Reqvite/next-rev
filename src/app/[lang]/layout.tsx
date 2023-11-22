@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { ReactNode } from "react";
 
-import { ServerError, ThemeSwitcher } from "@/feature";
+import { ServerError } from "@/feature";
 import AppProviders from "@/global/providers/AppProviders";
 import { Footer } from "@/sections";
 import { getStrapiMedia, getStrapiURL } from "@/shared/api/api-helpers";

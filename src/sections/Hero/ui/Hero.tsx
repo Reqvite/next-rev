@@ -2,13 +2,12 @@
 import { Box, Button, Flex, Heading, Img, Stack, Text } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 
-import { MBenefits } from "@/sections";
 import { getAnimationVariants } from "@/shared/animation/animation";
 import { getStrapiMedia } from "@/shared/api/api-helpers";
 import { ButtonLink } from "@/shared/types/components";
 
 interface Props {
-  image: any;
+  img: any;
   buttons: Array<ButtonLink>;
   description: string | null;
   title: string | null;
@@ -24,23 +23,23 @@ const MotionText = motion(Text);
 const MotionStack = motion(Stack);
 const animation = getAnimationVariants(0.6);
 
-export const Hero = ({ data }: HeroProps) => {
-  const { title, description, buttons, image, benefits } = data;
-  const imgUrl = getStrapiMedia(image.data.attributes.url);
+const Hero = ({ data }: HeroProps) => {
+  const { title, description, buttons, img, benefits } = data;
+  const imgUrl = getStrapiMedia(img.data.attributes.url);
 
   return (
     <Box
       bg="gray.800"
       as="section"
       minH="140px"
-      h={{ base: "auto", md: "100vh" }}
+      h={{ base: "500px", md: "500px" }}
       position="relative"
     >
       <Box
         pt={"32"}
         position="relative"
         zIndex={1}
-        h={{ base: "auto", md: "100vh" }}
+        h={{ base: "500px", md: "500px" }}
       >
         <Flex
           height={"100%"}
@@ -99,19 +98,6 @@ export const Hero = ({ data }: HeroProps) => {
               ))}
             </MotionStack>
           </MotionBox>
-          <MotionBox
-            py={10}
-            maxW="7xl"
-            mx={"auto"}
-            px={{ base: 2, sm: 12, md: 17 }}
-            initial={"hidden"}
-            whileInView={"visible"}
-            viewport={{ once: true }}
-          >
-            {benefits && (
-              <MBenefits custom={4} variants={animation} benefits={benefits} />
-            )}
-          </MotionBox>
         </Flex>
       </Box>
       <Flex
@@ -149,3 +135,5 @@ export const Hero = ({ data }: HeroProps) => {
     </Box>
   );
 };
+
+export default Hero;
