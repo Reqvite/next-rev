@@ -108,7 +108,7 @@ export const Navbar = memo((props: NavbarProps) => {
                 key={id}
                 as={"a"}
                 variant={variant}
-                href={`${lang}/${href}`}
+                href={`/${lang}/${href}`}
                 color={"white"}
               >
                 {label}
