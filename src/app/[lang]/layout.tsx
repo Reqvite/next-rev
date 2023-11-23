@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
 import { ReactNode } from "react";
 
 import { ServerError } from "@/feature";
@@ -10,6 +11,7 @@ import AppProviders from "@/global/providers/AppProviders";
 import { Footer } from "@/sections";
 import { getStrapiMedia, getStrapiURL } from "@/shared/api/api-helpers";
 import { fetchAPI } from "@/shared/api/fetch-api";
+import { authConfig } from "@/shared/config/auth/auth";
 import { i18n } from "@/shared/config/i18n/i18n";
 import { FALLBACK_SEO } from "@/shared/const/fallbackSeo";
 import { PageParams } from "@/shared/types/pageParams";
@@ -83,6 +85,7 @@ export default async function RootLayout({
   params,
 }: RootLayoutProps) {
   const global = await getGlobal(params.lang);
+  const session = await getServerSession(authConfig);
   if (!global.data) return <ServerError />;
   const cookieStore = cookies();
   const defaultTheme = "dark";
@@ -113,6 +116,7 @@ export default async function RootLayout({
             h={"100vh"}
           >
             <Navbar
+              session={session}
               lang={params.lang}
               links={navbar.links}
               buttons={navbar.buttons}

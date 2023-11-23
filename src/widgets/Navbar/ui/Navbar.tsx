@@ -13,10 +13,10 @@ import {
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
+import { signOut } from "next-auth/react";
 import { memo } from "react";
 
 import { ThemeSwitcher } from "@/feature";
-import { animationNavbar } from "@/shared/animation/animation";
 import type { ButtonLink, NavLink } from "@/shared/types/components";
 import { Logo } from "@/shared/ui";
 
@@ -29,11 +29,12 @@ type NavbarProps = {
   buttons: Array<ButtonLink>;
   logoUrl: string | null;
   logoText: string | null;
+  session: any;
 };
 
 const MotionBox = motion(Box);
 export const Navbar = memo((props: NavbarProps) => {
-  const { links, buttons, logoUrl, logoText, lang } = props;
+  const { links, buttons, logoUrl, logoText, lang, session } = props;
   const path = usePathname();
   const { isOpen, onToggle } = useDisclosure();
 
@@ -54,7 +55,6 @@ export const Navbar = memo((props: NavbarProps) => {
       position={"absolute"}
       zIndex={"var(--chakra-zIndices-navbar)"}
       width="100%"
-      {...animationNavbar}
     >
       <Flex
         bg={"transparent"}
@@ -96,25 +96,36 @@ export const Navbar = memo((props: NavbarProps) => {
             <DesktopNav isMainPage={isMainPage} links={links} />
           </Flex>
         </Flex>
-        {buttons && (
-          <Stack
-            flex={{ base: 1, md: 0 }}
-            justify={"flex-end"}
-            direction={"row"}
-            spacing={3}
-          >
-            {buttons.map(({ href, label, variant, id }) => (
-              <Button
-                key={id}
-                as={"a"}
-                variant={variant}
-                href={`/${lang}/${href}`}
-                color={"white"}
+
+        {session ? (
+          <>
+            Signed in as {session?.user?.email} <br />
+            <Button variant={"primary"} onClick={() => signOut()}>
+              Sign out
+            </Button>
+          </>
+        ) : (
+          <>
+            {buttons && (
+              <Stack
+                flex={{ base: 1, md: 0 }}
+                justify={"flex-end"}
+                direction={"row"}
+                spacing={3}
               >
-                {label}
-              </Button>
-            ))}
-          </Stack>
+                {buttons.map(({ href, label, variant, id }) => (
+                  <Button
+                    key={id}
+                    as={"a"}
+                    variant={variant}
+                    href={`/${lang}/${href}`}
+                  >
+                    {label}
+                  </Button>
+                ))}
+              </Stack>
+            )}
+          </>
         )}
         <ButtonGroup ml={5}>
           <ThemeSwitcher />

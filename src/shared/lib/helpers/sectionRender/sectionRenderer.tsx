@@ -1,4 +1,4 @@
-import { Categories, Hero } from "@/sections";
+import { Auth, Categories, Hero } from "@/sections";
 
 export function sectionRenderer(section: any, index: number) {
   switch (section.__component) {
@@ -8,6 +8,8 @@ export function sectionRenderer(section: any, index: number) {
     //   return <SubmitForm key={index} data={section} />;
     case "blocks.categories":
       return <Categories key={index} data={section} />;
+    case "blocks.auth-form":
+      return <Auth key={index} data={section} />;
     // case "blocks.subscribe-form":
     //   return <SubscribeForm key={index} data={section} />;
     // case "blocks.subscribe-form":

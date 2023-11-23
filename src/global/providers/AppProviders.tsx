@@ -1,8 +1,7 @@
-"use client";
-import { SessionProvider } from "next-auth/react";
 import { ReactNode } from "react";
 
 import ChakraProvider from "./CkakraProvider";
+import NextAuthprovider from "./NextAuthprovider";
 
 interface AppRpovidersProps {
   children: ReactNode;
@@ -11,7 +10,7 @@ interface AppRpovidersProps {
 function AppRpoviders({ children, cookies }: AppRpovidersProps) {
   return (
     <ChakraProvider colorMode={cookies}>
-      <SessionProvider>{children} </SessionProvider>
+      <NextAuthprovider>{children} </NextAuthprovider>
     </ChakraProvider>
   );
 }

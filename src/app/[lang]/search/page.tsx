@@ -5,7 +5,6 @@ import { sectionRenderer } from "@/shared/lib/helpers/sectionRender/sectionRende
 
 const urlParamsObject = ["contentSections", "contentSections.categories.img"];
 export default async function Categories({ params, searchParams }: any) {
-  console.log(searchParams);
   //   const page = await getPageBySlug("Search", params.lang, urlParamsObject);
 
   //   if (page.data.length === 0) return null;
