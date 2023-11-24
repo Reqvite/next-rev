@@ -17,8 +17,12 @@ import { signOut } from "next-auth/react";
 import { memo } from "react";
 
 import { ThemeSwitcher } from "@/feature";
-import type { ButtonLink, NavLink } from "@/shared/types/components";
-import { Logo } from "@/shared/ui";
+import type {
+  ButtonLink,
+  ButtonType,
+  NavLink,
+} from "@/shared/types/components";
+import { Logo, SearchField } from "@/shared/ui";
 
 import { DesktopNav } from "./DesktopNav";
 import { MobileNav } from "./MobileNav";
@@ -27,6 +31,7 @@ type NavbarProps = {
   lang: string;
   links: Array<NavLink>;
   buttons: Array<ButtonLink>;
+  logoutBtn: ButtonType;
   logoUrl: string | null;
   logoText: string | null;
   session: any;
@@ -34,7 +39,8 @@ type NavbarProps = {
 
 const MotionBox = motion(Box);
 export const Navbar = memo((props: NavbarProps) => {
-  const { links, buttons, logoUrl, logoText, lang, session } = props;
+  const { links, buttons, logoUrl, logoText, lang, session, logoutBtn } = props;
+
   const path = usePathname();
   const { isOpen, onToggle } = useDisclosure();
 
@@ -96,12 +102,13 @@ export const Navbar = memo((props: NavbarProps) => {
             <DesktopNav isMainPage={isMainPage} links={links} />
           </Flex>
         </Flex>
+        <SearchField />
 
         {session ? (
           <>
             Signed in as {session?.user?.email} <br />
-            <Button variant={"primary"} onClick={() => signOut()}>
-              Sign out
+            <Button variant={logoutBtn.variant} onClick={() => signOut()}>
+              {logoutBtn.label}
             </Button>
           </>
         ) : (

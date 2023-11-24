@@ -98,6 +98,8 @@ export const Auth = (props: AuthProps) => {
                   if (htmlFor === "password") {
                     return (
                       <PasswordField
+                        isRequired
+                        label={label}
                         key={id}
                         onChange={handleChange}
                         value={values[htmlFor]}
@@ -108,6 +110,7 @@ export const Auth = (props: AuthProps) => {
                     <FormLabel htmlFor="email" key={id} w={"full"}>
                       {label}
                       <Input
+                        isRequired
                         id={id}
                         name={htmlFor}
                         type={type}

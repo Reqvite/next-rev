@@ -39,6 +39,7 @@ async function getGlobal(lang: string): Promise<any> {
       "navbar.links",
       "navbar.links.children",
       "navbar.buttons",
+      "navbar.logoutBtn",
       "navbar.navbarLogo.img",
       "footer.footerLinks",
       "footer.footerLinks.children",
@@ -116,6 +117,7 @@ export default async function RootLayout({
             h={"100vh"}
           >
             <Navbar
+              logoutBtn={navbar.logoutBtn}
               session={session}
               lang={params.lang}
               links={navbar.links}
