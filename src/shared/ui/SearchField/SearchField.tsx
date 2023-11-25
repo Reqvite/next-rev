@@ -1,6 +1,5 @@
 "use client";
 import {
-  Box,
   Divider,
   FormControl,
   FormLabel,
@@ -9,17 +8,19 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  VStack,
 } from "@chakra-ui/react";
 import { forwardRef, useRef } from "react";
 import { FaSearch } from "react-icons/fa"; // Импортируйте иконку поиска (или используйте свою)
 
 interface SearchFieldProps {
   label?: string;
+  ml?: any;
+  maxW?: number;
 }
 
 export const SearchField = forwardRef<HTMLInputElement, SearchFieldProps>(
   (props, ref) => {
+    const { maxW = 600, label, ml } = props;
     const inputRef = useRef<HTMLInputElement>(null);
 
     const onClickReveal = () => {
@@ -29,18 +30,20 @@ export const SearchField = forwardRef<HTMLInputElement, SearchFieldProps>(
     };
 
     return (
-      <FormControl>
+      <FormControl ml={ml}>
         <FormLabel htmlFor="search" w={"full"}>
-          {props.label}
+          {label}
         </FormLabel>
         <HStack
           width={"full"}
           borderRadius={5}
-          h={50}
+          h={"40px"}
           border={"2px solid var(--chakra-colors-accentColor)"}
-          maxW={600}
+          maxW={maxW}
         >
           <Input
+            my={0}
+            h={"40px"}
             id="search"
             ref={ref}
             type="text"
@@ -56,19 +59,21 @@ export const SearchField = forwardRef<HTMLInputElement, SearchFieldProps>(
           />
           <InputGroup>
             <Input
+              my={0}
+              h={"40px"}
               id="hiddenSearchInput"
               type="text"
               ref={inputRef}
               placeholder="location"
               variant="clear"
             />
-            <InputRightElement width="50px" height={"100%"}>
+            <InputRightElement width="50px" h={"40px"}>
               <IconButton
+                h={"40px"}
                 borderRadius={5}
                 bg={"var(--chakra-colors-accentColor)"}
                 aria-label="Search"
                 width="50px"
-                height={"100%"}
                 onClick={onClickReveal}
                 icon={<FaSearch />}
               />

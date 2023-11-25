@@ -1,10 +1,10 @@
 import {
   Image,
+  Link,
   Text,
   useBreakpointValue,
   useColorModeValue,
 } from "@chakra-ui/react";
-import Link from "next/link";
 
 type LogoProps = {
   lang: string;
@@ -15,7 +15,7 @@ type LogoProps = {
 export const Logo = (props: LogoProps) => {
   const { logoUrl, logoText, isFooter, lang } = props;
   return (
-    <Link href={`/${lang}`}>
+    <Link href={`/${lang}`} mr={5}>
       <Image
         objectFit={"contain"}
         src={logoUrl || ""}
@@ -23,7 +23,6 @@ export const Logo = (props: LogoProps) => {
         height={25}
         borderRadius={"50%"}
         alt={"logo"}
-        marginRight={3}
       />
       <Text
         textAlign={useBreakpointValue({ base: "center", md: "left" })}

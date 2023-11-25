@@ -37,7 +37,7 @@ export const getTheme = (colorMode: string) => {
       mainShadow: "2px 5px 50px rgba(144, 144, 194, 0.4)",
     },
     sizes: {
-      headerHeight: "60px",
+      headerHeight: "120px",
       drawerFooterHeight: "113px",
       drawerWidth: "380px",
     },

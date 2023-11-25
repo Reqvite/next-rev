@@ -3,31 +3,78 @@
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import {
   Box,
+  Button,
   Collapse,
   Icon,
   Stack,
   Text,
   useColorModeValue,
   useDisclosure,
+  useMediaQuery,
 } from "@chakra-ui/react";
+import { signOut } from "next-auth/react";
 
-import { NavLink } from "@/shared/types/components";
+import { ButtonLink, ButtonType, NavLink } from "@/shared/types/components";
 
 type MobileNavProps = {
   links: NavLink[];
+  session: any;
+  logoutBtn: ButtonType;
+  buttons: Array<ButtonLink>;
+  lang: string;
 };
-export const MobileNav = ({ links }: MobileNavProps) => {
+export const MobileNav = (props: MobileNavProps) => {
+  const { links, session, logoutBtn, buttons, lang } = props;
+
+  const [isLargerThan1135] = useMediaQuery("(min-width: 1135.98px)", {
+    ssr: true,
+    fallback: false,
+  });
+
   return (
     <Stack
+      mt={"60px"}
+      w="full"
       p={4}
-      display={{ md: "none" }}
+      display={isLargerThan1135 ? "none" : "flex"}
+      flexDirection={"column"}
       bg={useColorModeValue(
         "var(--chakra-colors-secondaryBgColorLight)",
         "var(--chakra-colors-secondaryBgColorDark)",
       )}
     >
-      {links.map((navItem) => (
-        <MobileNavItem key={navItem.label} {...navItem} />
+      {session ? (
+        <>
+          Signed in as {session?.user?.email} <br />
+          <Button
+            aria-label={logoutBtn.label}
+            variant={logoutBtn.variant}
+            onClick={() => signOut()}
+            ml={isLargerThan1135 ? "200px" : 0}
+          >
+            {logoutBtn.label}
+          </Button>
+        </>
+      ) : (
+        <>
+          {buttons && (
+            <>
+              {buttons.map(({ href, label, variant, id }) => (
+                <Button
+                  key={id}
+                  as={"a"}
+                  variant={variant}
+                  href={`/${lang}/${href}`}
+                >
+                  {label}
+                </Button>
+              ))}
+            </>
+          )}
+        </>
+      )}
+      {links.map((navItem, idx) => (
+        <MobileNavItem key={idx} {...navItem} />
       ))}
     </Stack>
   );
@@ -72,10 +119,10 @@ const MobileNavItem = ({ label, children, href }: NavLink) => {
           align={"start"}
         >
           {children &&
-            children.map((child) => (
+            children.map((child, idx) => (
               <Box
                 as="a"
-                key={child.label}
+                key={idx}
                 py={2}
                 href={child.href}
                 _hover={{

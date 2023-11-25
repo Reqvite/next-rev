@@ -36,7 +36,7 @@ const Hero = ({ data }: HeroProps) => {
       position="relative"
     >
       <Box
-        pt={"32"}
+        pt={"40"}
         position="relative"
         zIndex={1}
         h={{ base: "500px", md: "500px" }}
