@@ -10,7 +10,6 @@ import {
   Text,
   useColorModeValue,
   useDisclosure,
-  useMediaQuery,
 } from "@chakra-ui/react";
 import { signOut } from "next-auth/react";
 
@@ -26,17 +25,11 @@ type MobileNavProps = {
 export const MobileNav = (props: MobileNavProps) => {
   const { links, session, logoutBtn, buttons, lang } = props;
 
-  const [isLargerThan1135] = useMediaQuery("(min-width: 1135.98px)", {
-    ssr: true,
-    fallback: false,
-  });
-
   return (
     <Stack
       mt={"60px"}
       w="full"
       p={4}
-      display={isLargerThan1135 ? "none" : "flex"}
       flexDirection={"column"}
       bg={useColorModeValue(
         "var(--chakra-colors-secondaryBgColorLight)",
@@ -50,7 +43,6 @@ export const MobileNav = (props: MobileNavProps) => {
             aria-label={logoutBtn.label}
             variant={logoutBtn.variant}
             onClick={() => signOut()}
-            ml={isLargerThan1135 ? "200px" : 0}
           >
             {logoutBtn.label}
           </Button>

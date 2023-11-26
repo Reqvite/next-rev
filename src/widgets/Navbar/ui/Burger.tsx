@@ -1,5 +1,5 @@
 import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
-import { Flex, IconButton, useMediaQuery } from "@chakra-ui/react";
+import { Flex, IconButton } from "@chakra-ui/react";
 import React from "react";
 
 interface BurgerProps {
@@ -7,16 +7,8 @@ interface BurgerProps {
   isOpen: boolean;
 }
 export const Burger = ({ onToggle, isOpen }: BurgerProps) => {
-  const [isLargerThan1135] = useMediaQuery("(min-width: 1135.98px)", {
-    ssr: true,
-    fallback: false,
-  });
   return (
-    <Flex
-      zIndex={100000}
-      flex={{ base: 1, md: "auto" }}
-      display={isLargerThan1135 ? "none" : "flex"}
-    >
+    <Flex zIndex={100000} flex={{ base: 1, md: "auto" }} display={"flex"}>
       <IconButton
         onClick={onToggle}
         icon={

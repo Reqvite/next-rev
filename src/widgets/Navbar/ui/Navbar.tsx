@@ -1,13 +1,7 @@
 "use client";
-import {
-  Box,
-  Flex,
-  Slide,
-  useColorModeValue,
-  useDisclosure,
-  useMediaQuery,
-} from "@chakra-ui/react";
+import { Box, useColorModeValue, useDisclosure } from "@chakra-ui/react";
 import { motion } from "framer-motion";
+import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import { memo } from "react";
 
@@ -16,12 +10,16 @@ import type {
   ButtonType,
   NavLink,
 } from "@/shared/types/components";
-import { Logo, SearchField } from "@/shared/ui";
 
-import { DesktopNav } from "./DesktopNav";
-import { MobileNav } from "./MobileNav";
+const NavbarDesktop = dynamic(() => import("./NavbarDesktop"), {
+  ssr: true,
+});
+const NavbarMobile = dynamic(() => import("./NavbarMobile"), {
+  ssr: true,
+});
 
 type NavbarProps = {
+  isMobile: boolean;
   lang: string;
   links: Array<NavLink>;
   buttons: Array<ButtonLink>;
@@ -33,7 +31,16 @@ type NavbarProps = {
 
 const MotionBox = motion(Box);
 export const Navbar = memo((props: NavbarProps) => {
-  const { links, buttons, logoUrl, logoText, lang, session, logoutBtn } = props;
+  const {
+    links,
+    buttons,
+    logoUrl,
+    logoText,
+    lang,
+    session,
+    logoutBtn,
+    isMobile,
+  } = props;
 
   const path = usePathname();
   const { isOpen, onToggle } = useDisclosure();
@@ -44,19 +51,11 @@ export const Navbar = memo((props: NavbarProps) => {
     "var(--chakra-colors-secondaryBgColorDark)",
   );
 
-  const [isLargerThan1135] = useMediaQuery("(min-width: 1135.98px)", {
-    ssr: true,
-    fallback: false,
-  });
   return (
     <MotionBox
       height={"var(--chakra-sizes-headerHeight)"}
       as="header"
-      css={{ backdropFilter: "blur(10px)" }}
-      bg={{
-        base: themeBg,
-        md: isMainPage ? "transparent" : themeBg,
-      }}
+      bg={isMainPage ? "transparent" : themeBg}
       position={"absolute"}
       zIndex={"var(--chakra-zIndices-navbar)"}
       width="100%"
@@ -65,33 +64,32 @@ export const Navbar = memo((props: NavbarProps) => {
       px={{ base: 6 }}
       align={"center"}
     >
-      <Flex align={"baseline"} w="full">
-        <Logo logoText={logoText} logoUrl={logoUrl} lang={lang} />
-        <DesktopNav
+      {!isMobile ? (
+        <NavbarDesktop
+          links={links}
           isMainPage={isMainPage}
-          links={links}
-          session={session}
-          logoutBtn={logoutBtn}
-          buttons={buttons}
-          lang={lang}
-          onToggle={onToggle}
           isOpen={isOpen}
-        />
-      </Flex>
-      {!isLargerThan1135 && (
-        <Flex mt={1}>
-          <SearchField maxW={2000} />
-        </Flex>
-      )}
-      <Slide in={isOpen}>
-        <MobileNav
-          links={links}
-          session={session}
-          logoutBtn={logoutBtn}
-          buttons={buttons}
+          onToggle={onToggle}
           lang={lang}
+          buttons={buttons}
+          logoutBtn={logoutBtn}
+          logoUrl={logoUrl}
+          logoText={logoText}
+          session={session}
         />
-      </Slide>
+      ) : (
+        <NavbarMobile
+          logoUrl={logoUrl}
+          logoText={logoText}
+          isOpen={isOpen}
+          onToggle={onToggle}
+          links={links}
+          lang={lang}
+          buttons={buttons}
+          logoutBtn={logoutBtn}
+          session={session}
+        />
+      )}
     </MotionBox>
   );
 });

@@ -24,6 +24,12 @@ async function fetchBusinessesByCategory(filter: string) {
         tags: {
           populate: "*",
         },
+        reviews: {
+          populate: "*",
+        },
+        schedule: {
+          populate: "*",
+        },
       },
     };
     const options = { headers: { Authorization: `Bearer ${token}` } };

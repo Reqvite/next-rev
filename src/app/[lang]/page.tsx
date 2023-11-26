@@ -2,6 +2,7 @@ import { Box } from "@chakra-ui/react";
 
 import { getPageBySlug } from "@/shared/api/get-page-by-slug";
 import { sectionRenderer } from "@/shared/lib/helpers/sectionRender/sectionRenderer";
+import { utilServerSideDeviceDetection } from "@/shared/lib/helpers/utilServerSideDeviceDetection/utilServerSideDeviceDetection";
 
 const urlParamsObject = [
   "contentSections",
