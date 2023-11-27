@@ -6,7 +6,7 @@ import Carousel from "@/shared/ui/ImageCarousel/ImageCarousel";
 import { BadgeList } from "../BadgeList/BadgeList";
 import { Rating } from "../Rating/Rating";
 
-export interface Establishment {
+export interface BusinessI {
   id: number;
   photos: Array<string>;
   name: string;
@@ -17,11 +17,11 @@ export interface Establishment {
   establishmentTypeArray?: Array<string>;
 }
 
-interface EstablishmentCardProps {
-  establishment: Establishment;
+interface BusinessCardProps {
+  establishment: BusinessI;
 }
 
-const EstablishmentCard: React.FC<EstablishmentCardProps> = ({
+export const BusinessCard: React.FC<BusinessCardProps> = ({
   establishment,
 }) => {
   const {
@@ -78,5 +78,3 @@ const EstablishmentCard: React.FC<EstablishmentCardProps> = ({
     </Box>
   );
 };
-
-export default EstablishmentCard;

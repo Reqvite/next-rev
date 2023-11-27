@@ -13,7 +13,10 @@ import {
 import { forwardRef, useRef } from "react";
 import { HiEye, HiEyeOff } from "react-icons/hi";
 
-export const PasswordField = forwardRef<HTMLInputElement, InputProps>(
+interface PasswordFieldProps extends InputProps {
+  label?: string;
+}
+export const PasswordField = forwardRef<HTMLInputElement, PasswordFieldProps>(
   (props, ref) => {
     const { isOpen, onToggle } = useDisclosure();
     const inputRef = useRef<HTMLInputElement>(null);
@@ -29,7 +32,7 @@ export const PasswordField = forwardRef<HTMLInputElement, InputProps>(
     return (
       <FormControl>
         <FormLabel htmlFor="password" w={"full"}>
-          Password
+          {props.label}
           <InputGroup>
             <InputRightElement>
               <IconButton

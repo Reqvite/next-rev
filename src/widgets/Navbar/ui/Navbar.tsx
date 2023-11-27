@@ -1,32 +1,29 @@
 "use client";
-import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Collapse,
-  Flex,
-  IconButton,
-  Stack,
-  useColorModeValue,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { Box, useColorModeValue, useDisclosure } from "@chakra-ui/react";
 import { motion } from "framer-motion";
+import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
-import { signOut } from "next-auth/react";
 import { memo } from "react";
 
-import { ThemeSwitcher } from "@/feature";
-import type { ButtonLink, NavLink } from "@/shared/types/components";
-import { Logo } from "@/shared/ui";
+import type {
+  ButtonLink,
+  ButtonType,
+  NavLink,
+} from "@/shared/types/components";
 
-import { DesktopNav } from "./DesktopNav";
-import { MobileNav } from "./MobileNav";
+const NavbarDesktop = dynamic(() => import("./NavbarDesktop"), {
+  ssr: true,
+});
+const NavbarMobile = dynamic(() => import("./NavbarMobile"), {
+  ssr: true,
+});
 
 type NavbarProps = {
+  isMobile: boolean;
   lang: string;
   links: Array<NavLink>;
   buttons: Array<ButtonLink>;
+  logoutBtn: ButtonType;
   logoUrl: string | null;
   logoText: string | null;
   session: any;
@@ -34,7 +31,17 @@ type NavbarProps = {
 
 const MotionBox = motion(Box);
 export const Navbar = memo((props: NavbarProps) => {
-  const { links, buttons, logoUrl, logoText, lang, session } = props;
+  const {
+    links,
+    buttons,
+    logoUrl,
+    logoText,
+    lang,
+    session,
+    logoutBtn,
+    isMobile,
+  } = props;
+
   const path = usePathname();
   const { isOpen, onToggle } = useDisclosure();
 
@@ -46,94 +53,43 @@ export const Navbar = memo((props: NavbarProps) => {
 
   return (
     <MotionBox
+      height={"var(--chakra-sizes-headerHeight)"}
       as="header"
-      css={{ backdropFilter: "blur(10px)" }}
-      bg={{
-        base: themeBg,
-        md: isMainPage ? "transparent" : themeBg,
-      }}
+      bg={isMainPage ? "transparent" : themeBg}
       position={"absolute"}
       zIndex={"var(--chakra-zIndices-navbar)"}
       width="100%"
+      minH={"60px"}
+      py={{ base: 2 }}
+      px={{ base: 6 }}
+      align={"center"}
     >
-      <Flex
-        bg={"transparent"}
-        minH={"60px"}
-        py={{ base: 2 }}
-        px={{ base: 4 }}
-        align={"center"}
-      >
-        <Flex
-          flex={{ base: 1, md: "auto" }}
-          ml={{ base: -2 }}
-          display={{ base: "flex", md: "none" }}
-        >
-          <IconButton
-            onClick={onToggle}
-            icon={
-              isOpen ? (
-                <CloseIcon
-                  w={3}
-                  h={3}
-                  color={"var(--chakra-colors-accentColor)"}
-                />
-              ) : (
-                <HamburgerIcon
-                  w={5}
-                  h={5}
-                  color={"var(--chakra-colors-accentColor)"}
-                />
-              )
-            }
-            variant={"ghost"}
-            _hover={{ bg: "var(--chakra-colors-accentColorTransparent)" }}
-            aria-label={"Toggle Navigation"}
-          />
-        </Flex>
-        <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
-          <Logo logoText={logoText} logoUrl={logoUrl} lang={lang} />
-          <Flex display={{ base: "none", md: "flex" }} ml={10}>
-            <DesktopNav isMainPage={isMainPage} links={links} />
-          </Flex>
-        </Flex>
-
-        {session ? (
-          <>
-            Signed in as {session?.user?.email} <br />
-            <Button variant={"primary"} onClick={() => signOut()}>
-              Sign out
-            </Button>
-          </>
-        ) : (
-          <>
-            {buttons && (
-              <Stack
-                flex={{ base: 1, md: 0 }}
-                justify={"flex-end"}
-                direction={"row"}
-                spacing={3}
-              >
-                {buttons.map(({ href, label, variant, id }) => (
-                  <Button
-                    key={id}
-                    as={"a"}
-                    variant={variant}
-                    href={`/${lang}/${href}`}
-                  >
-                    {label}
-                  </Button>
-                ))}
-              </Stack>
-            )}
-          </>
-        )}
-        <ButtonGroup ml={5}>
-          <ThemeSwitcher />
-        </ButtonGroup>
-      </Flex>
-      <Collapse in={isOpen} animateOpacity>
-        <MobileNav links={links} />
-      </Collapse>
+      {!isMobile ? (
+        <NavbarDesktop
+          links={links}
+          isMainPage={isMainPage}
+          isOpen={isOpen}
+          onToggle={onToggle}
+          lang={lang}
+          buttons={buttons}
+          logoutBtn={logoutBtn}
+          logoUrl={logoUrl}
+          logoText={logoText}
+          session={session}
+        />
+      ) : (
+        <NavbarMobile
+          logoUrl={logoUrl}
+          logoText={logoText}
+          isOpen={isOpen}
+          onToggle={onToggle}
+          links={links}
+          lang={lang}
+          buttons={buttons}
+          logoutBtn={logoutBtn}
+          session={session}
+        />
+      )}
     </MotionBox>
   );
 });

@@ -37,7 +37,7 @@ export const getTheme = (colorMode: string) => {
       mainShadow: "2px 5px 50px rgba(144, 144, 194, 0.4)",
     },
     sizes: {
-      headerHeight: "60px",
+      headerHeight: "120px",
       drawerFooterHeight: "113px",
       drawerWidth: "380px",
     },
@@ -80,31 +80,15 @@ export const getTheme = (colorMode: string) => {
           },
         },
       },
-      Form: {
+      Input: {
         variants: {
-          floating: {
-            container: {
-              _focusWithin: {
-                label: {
-                  ...activeLabelStyles,
-                },
-              },
-              "input:not(:placeholder-shown) + label, .chakra-select__wrapper + label, textarea:not(:placeholder-shown) ~ label":
-                {
-                  ...activeLabelStyles,
-                },
-              label: {
-                top: 0,
-                left: 0,
-                zIndex: 2,
-                position: "absolute",
-                backgroundColor: "transparent",
-                pointerEvents: "none",
-                mx: 3,
-                px: 1,
-                my: 2,
-                transformOrigin: "left top",
-              },
+          clear: {
+            field: {
+              color: "var(--chakra-colors-accentColor)",
+              width: "100%",
+              display: "inline-block",
+              my: "0.25rem",
+              bg: "transparent",
             },
           },
         },

@@ -15,6 +15,8 @@ const deriveNextTheme = (currentTheme: string) => {
       return "dark";
   }
 };
+
+const MIconButton = motion(IconButton);
 export const ThemeSwitcher: FC = () => {
   const { colorMode, toggleColorMode } = useColorMode();
 
@@ -34,22 +36,19 @@ export const ThemeSwitcher: FC = () => {
 
   return (
     <AnimatePresence mode="wait" initial={false}>
-      <motion.div
+      <MIconButton
         key={useColorModeValue("light", "dark")}
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: 10, opacity: 0 }}
         transition={{ duration: 0.2 }}
         whileHover={{ scale: 1.05 }}
-      >
-        <IconButton
-          aria-label="Toggle theme"
-          bg={useColorModeValue("rgba(144, 144, 194)", "yellow.500")}
-          icon={useColorModeValue(<MoonIcon />, <SunIcon />)}
-          onClick={onThemeClick}
-          variant="disabled"
-        />
-      </motion.div>
+        aria-label="Toggle theme"
+        bg={useColorModeValue("rgba(144, 144, 194)", "yellow.500")}
+        icon={useColorModeValue(<MoonIcon />, <SunIcon />)}
+        onClick={onThemeClick}
+        variant="disabled"
+      />
     </AnimatePresence>
   );
 };

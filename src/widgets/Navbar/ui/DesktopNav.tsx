@@ -1,5 +1,3 @@
-"use client";
-
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import {
   Box,
@@ -11,15 +9,29 @@ import {
   Stack,
   Text,
   useColorModeValue,
+  VStack,
 } from "@chakra-ui/react";
 
-import type { NavLink, SubLink } from "@/shared/types/components";
+import type {
+  ButtonLink,
+  ButtonType,
+  NavLink,
+  SubLink,
+} from "@/shared/types/components";
+import { SearchField } from "@/shared/ui";
 
 type DesktopNavProps = {
   links: NavLink[];
   isMainPage: boolean;
+  session: any;
+  logoutBtn: ButtonType;
+  buttons: Array<ButtonLink>;
+  lang: string;
+  onToggle: any;
+  isOpen: boolean;
 };
-export const DesktopNav = ({ links, isMainPage }: DesktopNavProps) => {
+export const DesktopNav = (props: DesktopNavProps) => {
+  const { links, isMainPage } = props;
   const linkColor = useColorModeValue(
     "var(--chakra-colors-mainColorLight)",
     "var(--chakra-colors-mainColorDark)",
@@ -28,50 +40,60 @@ export const DesktopNav = ({ links, isMainPage }: DesktopNavProps) => {
     "var(--chakra-colors-mainBgColorLight)",
     "var(--chakra-colors-mainBgColorDark)",
   );
-  return (
-    <Stack direction={"row"} spacing={4}>
-      {links.map((navItem) => (
-        <Box key={navItem.label}>
-          <Popover trigger={"hover"} placement={"bottom-start"}>
-            <PopoverTrigger>
-              <Box
-                as="a"
-                p={2}
-                href={navItem.href ?? "#"}
-                fontSize={"sm"}
-                fontWeight={500}
-                color={
-                  isMainPage ? "var(--chakra-colors-mainColorDark)" : linkColor
-                }
-                _hover={{
-                  textDecoration: "none",
-                  color: "var(--chakra-colors-accentColor)",
-                }}
-              >
-                {navItem.label}
-              </Box>
-            </PopoverTrigger>
 
-            {navItem.children && (
-              <PopoverContent
-                border={0}
-                boxShadow={"xl"}
-                bg={popoverContentBgColor}
-                p={4}
-                rounded={"xl"}
-                minW={"sm"}
-              >
-                <Stack>
-                  {navItem.children.map((child) => (
-                    <DesktopSubNav key={child.label} {...child} />
-                  ))}
-                </Stack>
-              </PopoverContent>
-            )}
-          </Popover>
+  return (
+    <VStack w={"full"} as="nav">
+      <Flex align={"baseline"} mr={"auto"} ml={5}>
+        <Box>
+          <SearchField />
+          <Stack direction={"row"} spacing={4} mt={"10px"}>
+            {links.map((navItem, idx) => (
+              <Box key={idx}>
+                <Popover trigger={"hover"} placement={"bottom-start"}>
+                  <PopoverTrigger>
+                    <Box
+                      as="a"
+                      p={2}
+                      href={navItem.href ?? "#"}
+                      fontSize={"sm"}
+                      fontWeight={500}
+                      color={
+                        isMainPage
+                          ? "var(--chakra-colors-mainColorDark)"
+                          : linkColor
+                      }
+                      _hover={{
+                        textDecoration: "none",
+                        color: "var(--chakra-colors-accentColor)",
+                      }}
+                    >
+                      {navItem.label}
+                    </Box>
+                  </PopoverTrigger>
+
+                  {navItem.children && (
+                    <PopoverContent
+                      border={0}
+                      boxShadow={"xl"}
+                      bg={popoverContentBgColor}
+                      p={4}
+                      rounded={"xl"}
+                      minW={"sm"}
+                    >
+                      <Stack>
+                        {navItem.children.map((child, idx) => (
+                          <DesktopSubNav key={idx} {...child} />
+                        ))}
+                      </Stack>
+                    </PopoverContent>
+                  )}
+                </Popover>
+              </Box>
+            ))}
+          </Stack>
         </Box>
-      ))}
-    </Stack>
+      </Flex>
+    </VStack>
   );
 };
 

@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { FaChevronRight } from "react-icons/fa";
 
 import { getStrapiMedia } from "@/shared/api/api-helpers";
@@ -24,14 +24,14 @@ interface Props {
 }
 
 const MBox = motion(Box);
-const MLink = motion(Link);
 
-const CategoryCard = (props: Props) => {
+export const CategoryCard = (props: Props) => {
+  const pathname = usePathname();
   const { category, rootProps } = props;
   const router = useRouter();
   const { title, slug, description, img, linkTitle } = category;
   const categoryImg = getStrapiMedia(img.data.attributes.url);
-
+  const lang = pathname.split("/")[1];
   return (
     <MBox
       h={"full"}
@@ -46,12 +46,7 @@ const CategoryCard = (props: Props) => {
       whileTap={{ scale: 0.99 }}
       {...rootProps}
     >
-      <Link
-        href={{
-          pathname: `/search`,
-          query: { params: slug },
-        }}
-      >
+      <Link href={`${lang}/search/${slug}`}>
         <Image
           src={categoryImg || ""}
           height="full"
@@ -92,5 +87,3 @@ const CategoryCard = (props: Props) => {
     </MBox>
   );
 };
-
-export const MCategoryCard = motion(CategoryCard);

@@ -1,8 +1,7 @@
 import { Box, Flex } from "@chakra-ui/react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import { cookies, headers } from "next/headers";
 import { getServerSession } from "next-auth";
 import { ReactNode } from "react";
 
@@ -14,6 +13,7 @@ import { fetchAPI } from "@/shared/api/fetch-api";
 import { authConfig } from "@/shared/config/auth/auth";
 import { i18n } from "@/shared/config/i18n/i18n";
 import { FALLBACK_SEO } from "@/shared/const/fallbackSeo";
+import { utilServerSideDeviceDetection } from "@/shared/lib/helpers/utilServerSideDeviceDetection/utilServerSideDeviceDetection";
 import { PageParams } from "@/shared/types/pageParams";
 import { Navbar } from "@/widgets";
 
@@ -39,6 +39,7 @@ async function getGlobal(lang: string): Promise<any> {
       "navbar.links",
       "navbar.links.children",
       "navbar.buttons",
+      "navbar.logoutBtn",
       "navbar.navbarLogo.img",
       "footer.footerLinks",
       "footer.footerLinks.children",
@@ -84,6 +85,9 @@ export default async function RootLayout({
   children,
   params,
 }: RootLayoutProps) {
+  const headersList = headers();
+  const userAgent = headersList.get("user-agent");
+  const { isMobile } = utilServerSideDeviceDetection(userAgent);
   const global = await getGlobal(params.lang);
   const session = await getServerSession(authConfig);
   if (!global.data) return <ServerError />;
@@ -116,6 +120,8 @@ export default async function RootLayout({
             h={"100vh"}
           >
             <Navbar
+              isMobile={isMobile}
+              logoutBtn={navbar.logoutBtn}
               session={session}
               lang={params.lang}
               links={navbar.links}

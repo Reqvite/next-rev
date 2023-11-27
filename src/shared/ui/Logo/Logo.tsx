@@ -1,5 +1,7 @@
+"use client";
 import {
   Image,
+  Link,
   Text,
   useBreakpointValue,
   useColorModeValue,
@@ -14,7 +16,7 @@ type LogoProps = {
 export const Logo = (props: LogoProps) => {
   const { logoUrl, logoText, isFooter, lang } = props;
   return (
-    <>
+    <Link href={`/${lang}`} mr={5}>
       <Image
         objectFit={"contain"}
         src={logoUrl || ""}
@@ -22,17 +24,14 @@ export const Logo = (props: LogoProps) => {
         height={25}
         borderRadius={"50%"}
         alt={"logo"}
-        marginRight={3}
       />
       <Text
-        as={"a"}
-        href={`/${lang}`}
         textAlign={useBreakpointValue({ base: "center", md: "left" })}
         fontFamily={"heading"}
         color={useColorModeValue(isFooter ? "black" : "white", "white")}
       >
         {logoText}
       </Text>
-    </>
+    </Link>
   );
 };

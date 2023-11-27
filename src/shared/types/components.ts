@@ -23,8 +23,7 @@ export interface ButtonLink {
 
 export interface ButtonType {
   id: string;
-  href?: string;
-  text: string;
+  label: string;
   variant: string;
 }
 

@@ -16,7 +16,7 @@ import { FaArrowRight } from "react-icons/fa";
 import { getAnimationVariants } from "@/shared/animation/animation";
 import { Category } from "@/shared/types/components";
 
-import { MCategoryCard } from "./CatetgoryCard";
+import { CategoryCard } from "./CatetgoryCard";
 
 interface CategoriesProps {
   data: any;
@@ -82,7 +82,7 @@ export const Categories = ({ data }: CategoriesProps) => {
                 viewport={{ once: true }}
                 key={category.id}
               >
-                <MCategoryCard category={category.attributes} />
+                <CategoryCard category={category.attributes} />
               </motion.li>
             ),
           )}
