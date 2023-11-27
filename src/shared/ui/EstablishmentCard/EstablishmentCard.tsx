@@ -1,7 +1,10 @@
-import { Badge, Box, Heading, Text } from "@chakra-ui/react";
+import { Box, Heading, Text } from "@chakra-ui/react";
 import React from "react";
 
 import Carousel from "@/shared/ui/ImageCarousel/ImageCarousel";
+
+import { BadgeList } from "../BadgeList/BadgeList";
+import { Rating } from "../Rating/Rating";
 
 export interface Establishment {
   id: number;
@@ -11,7 +14,7 @@ export interface Establishment {
   numberOfReviews: number;
   workingHours: string;
   description: string;
-  establishmentType?: string | Array<string>;
+  establishmentTypeArray?: Array<string>;
 }
 
 interface EstablishmentCardProps {
@@ -28,7 +31,7 @@ const EstablishmentCard: React.FC<EstablishmentCardProps> = ({
     numberOfReviews,
     workingHours,
     description,
-    establishmentType,
+    establishmentTypeArray,
   } = establishment;
 
   return (
@@ -38,6 +41,10 @@ const EstablishmentCard: React.FC<EstablishmentCardProps> = ({
       borderRadius="lg"
       overflow="hidden"
       p={4}
+      _hover={{
+        boxShadow: "0 0 10px #0000001a",
+        cursor: "pointer",
+      }}
     >
       <Box as="div" h="170px" w="170px">
         <Carousel photos={photos} imageHeight={"300px"} />
@@ -46,21 +53,23 @@ const EstablishmentCard: React.FC<EstablishmentCardProps> = ({
         <Heading as="h2" size="md" mb={2}>
           {name}
         </Heading>
-        {establishmentType && (
-          <Badge variant="outline" colorScheme="blue" mb={2}>
-            {Array.isArray(establishmentType)
-              ? establishmentType.join(", ")
-              : establishmentType}
-          </Badge>
-        )}
-        <Box as={"div"} display={"flex"}>
-          <Text fontSize="sm" color="gray.500" mb={2}>
-            Rating: {rating}
-          </Text>
+        <Box as={"div"} display={"flex"} mb={2}>
+          <Rating
+            defaultValue={rating}
+            max={5}
+            size="lg"
+            rootProps={{ spacing: 2 }}
+          />
+
           <Text fontSize="sm" color="gray.400" ml={2}>
             {numberOfReviews} reviews
           </Text>
         </Box>
+
+        {establishmentTypeArray && (
+          <BadgeList badges={establishmentTypeArray} size={"sm"} />
+        )}
+
         <Text fontSize="sm" color="gray.500" mb={2}>
           Working Hours: {workingHours}
         </Text>

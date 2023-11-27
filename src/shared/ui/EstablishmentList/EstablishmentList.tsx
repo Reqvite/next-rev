@@ -13,7 +13,7 @@ export const EstablishmentList: React.FC<EstablishmentListProps> = ({
   establishments,
 }) => {
   return (
-    <SimpleGrid columns={[1]} spacing={"0px"}>
+    <SimpleGrid columns={[1]} spacing={0}>
       {establishments.map((establishment) => (
         <EstablishmentCard
           key={establishment.id}
