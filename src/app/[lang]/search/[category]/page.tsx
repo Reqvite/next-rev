@@ -1,8 +1,51 @@
-import { Box } from "@chakra-ui/react";
-
+import { BusinessesList } from "@/sections/BusinessesList/BusinessesList";
 import { fetchAPI } from "@/shared/api/fetch-api";
 import { StickyLayoutWithThreeColumns } from "@/shared/layouts";
 import { EmbedGoogleMap, Logo } from "@/shared/ui";
+const establishments = [
+  {
+    id: 1,
+    photos: [
+      "https://images.unsplash.com/photo-1612852098516-55d01c75769a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDR8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60",
+      "https://images.unsplash.com/photo-1627875764093-315831ac12f7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDJ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60",
+      "https://images.unsplash.com/photo-1571432248690-7fd6980a1ae2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDl8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60",
+    ],
+    name: "Sample Restaurant",
+    rating: 5,
+    numberOfReviews: 34,
+    workingHours: "Mon - Fri: 9 AM - 8 PM",
+    description: "A great place to enjoy delicious food!",
+    establishmentTypeArray: ["Cafe"],
+  },
+  {
+    id: 2,
+    photos: [
+      "https://images.unsplash.com/photo-1612852098516-55d01c75769a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDR8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60",
+      "https://images.unsplash.com/photo-1627875764093-315831ac12f7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDJ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60",
+      "https://images.unsplash.com/photo-1571432248690-7fd6980a1ae2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDl8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60",
+    ],
+    name: "Sample Restaurant",
+    rating: 2.5,
+    numberOfReviews: 34,
+    workingHours: "Mon - Fri: 9 AM - 8 PM",
+    description: "A great place to enjoy delicious food!",
+    establishmentTypeArray: ["Cafe"],
+  },
+  {
+    id: 3,
+    photos: [
+      "https://images.unsplash.com/photo-1612852098516-55d01c75769a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDR8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60",
+      "https://images.unsplash.com/photo-1627875764093-315831ac12f7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDJ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60",
+      "https://images.unsplash.com/photo-1571432248690-7fd6980a1ae2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDl8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60",
+    ],
+    name: "Sample Restaurant",
+    rating: 1.2,
+    numberOfReviews: 34,
+    workingHours: "Mon - Fri: 9 AM - 8 PM",
+    description: "A great place to enjoy delicious food!",
+    establishmentTypeArray: ["Cafe", "Restaurant"],
+  },
+];
 
 async function fetchBusinessesByCategory(filter: string) {
   try {
@@ -53,12 +96,13 @@ export default async function SearchRoute({
   //TODO: CREATE A COMPONENT FOR THIS
   if (data.length === 0) return <div>Not found</div>;
 
+  const location = data[0].attributes.location;
   return (
     <StickyLayoutWithThreeColumns
       pt={"var(--chakra-sizes-headerHeight)"}
       leftComponent={<Logo lang="en" logoUrl={""} />}
-      centerComponent={<Logo lang="en" logoUrl={""} />}
-      rightComponent={<EmbedGoogleMap />}
+      centerComponent={<BusinessesList establishments={establishments} />}
+      rightComponent={<EmbedGoogleMap location={location} />}
     />
   );
 }

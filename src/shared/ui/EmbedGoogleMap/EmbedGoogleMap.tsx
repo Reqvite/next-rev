@@ -1,15 +1,21 @@
 import React from "react";
 
-export const EmbedGoogleMap = () => {
+interface EmbedGoogleMapProps {
+  w?: string;
+  h?: string;
+  location: string;
+}
+export const EmbedGoogleMap = (props: EmbedGoogleMapProps) => {
+  const { w = "100%", h = "100%", location } = props;
   return (
     <iframe
-      width="100%"
-      height="100%"
+      width={w}
+      height={h}
       loading="lazy"
       allowFullScreen
       referrerPolicy="no-referrer-when-downgrade"
-      src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCOUrG93bR1MHD-g7RzuhyiOVI1AqYJDH0
-        &q=Space+Needle,Seattle+WA"
+      src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyCOUrG93bR1MHD-g7RzuhyiOVI1AqYJDH0
+      &q=${location}`}
     />
   );
 };

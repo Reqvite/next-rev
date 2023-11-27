@@ -21,10 +21,10 @@ export const StickyLayoutWithThreeColumns = (
       color="blackAlpha.700"
       fontWeight="bold"
     >
-      <GridItem as={"section"} bg="orange.300" area={"left"}>
+      <GridItem as={"section"} area={"left"}>
         {leftComponent}
       </GridItem>
-      <GridItem as={"section"} bg="pink.300" area={"center"}>
+      <GridItem as={"section"} area={"center"}>
         {centerComponent}
       </GridItem>
       <GridItem as={"section"} area={"right"}>
