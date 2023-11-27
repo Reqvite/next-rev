@@ -60,7 +60,7 @@ export const Navbar = memo((props: NavbarProps) => {
       zIndex={"var(--chakra-zIndices-navbar)"}
       width="100%"
       minH={"60px"}
-      py={{ base: 4 }}
+      py={{ base: 2 }}
       px={{ base: 6 }}
       align={"center"}
     >

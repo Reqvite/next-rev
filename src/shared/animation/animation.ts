@@ -16,13 +16,3 @@ export const getAnimationVariants = (additionalDuration = 0) => {
     },
   };
 };
-
-export const animationNavbar = {
-  initial: {
-    y: -100,
-  },
-  animate: {
-    y: 0,
-    transition: { duration },
-  },
-};

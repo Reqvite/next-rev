@@ -1,3 +1,4 @@
+export { EmbedGoogleMap } from "./EmbedGoogleMap/EmbedGoogleMap";
 export { IconButtonGroup } from "./IconButtonGroup/IconButtonGroup";
 export { Logo } from "./Logo/Logo";
 export { PasswordField } from "./PasswordField/PasswordField";

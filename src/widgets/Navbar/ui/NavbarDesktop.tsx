@@ -45,44 +45,46 @@ const NavbarDesktop = (props: NavbarDesktopProps) => {
         onToggle={onToggle}
         isOpen={isOpen}
       />
-      {session ? (
-        <>
-          Signed in as {session?.user?.email} <br />
-          <Button
-            aria-label={logoutBtn.label}
-            variant={logoutBtn.variant}
-            onClick={() => signOut()}
-            ml={"200px"}
-          >
-            {logoutBtn.label}
-          </Button>
-        </>
-      ) : (
-        <>
-          {buttons && (
-            <Stack
+      <Flex>
+        {session ? (
+          <>
+            Signed in as {session?.user?.email} <br />
+            <Button
+              aria-label={logoutBtn.label}
+              variant={logoutBtn.variant}
+              onClick={() => signOut()}
               ml={"200px"}
-              flex={{ base: 1, md: 0 }}
-              direction={"row"}
-              spacing={3}
             >
-              {buttons.map(({ href, label, variant, id }) => (
-                <Button
-                  key={id}
-                  as={"a"}
-                  variant={variant}
-                  href={`/${lang}/${href}`}
-                >
-                  {label}
-                </Button>
-              ))}
-            </Stack>
-          )}
-        </>
-      )}
-      <ButtonGroup ml={5}>
-        <ThemeSwitcher />
-      </ButtonGroup>
+              {logoutBtn.label}
+            </Button>
+          </>
+        ) : (
+          <>
+            {buttons && (
+              <Stack
+                ml={"200px"}
+                flex={{ base: 1, md: 0 }}
+                direction={"row"}
+                spacing={3}
+              >
+                {buttons.map(({ href, label, variant, id }) => (
+                  <Button
+                    key={id}
+                    as={"a"}
+                    variant={variant}
+                    href={`/${lang}/${href}`}
+                  >
+                    {label}
+                  </Button>
+                ))}
+              </Stack>
+            )}
+          </>
+        )}
+        <ButtonGroup ml={5}>
+          <ThemeSwitcher />
+        </ButtonGroup>
+      </Flex>
     </Flex>
   );
 };

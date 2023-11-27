@@ -1,6 +1,8 @@
 import { Box } from "@chakra-ui/react";
 
 import { fetchAPI } from "@/shared/api/fetch-api";
+import { StickyLayoutWithThreeColumns } from "@/shared/layouts";
+import { EmbedGoogleMap, Logo } from "@/shared/ui";
 
 async function fetchBusinessesByCategory(filter: string) {
   try {
@@ -51,8 +53,14 @@ export default async function SearchRoute({
   //TODO: CREATE A COMPONENT FOR THIS
   if (data.length === 0) return <div>Not found</div>;
 
-  console.log(data);
-  return <Box as="main" pt={"var(--chakra-sizes-headerHeight)"}></Box>;
+  return (
+    <StickyLayoutWithThreeColumns
+      pt={"var(--chakra-sizes-headerHeight)"}
+      leftComponent={<Logo lang="en" logoUrl={""} />}
+      centerComponent={<Logo lang="en" logoUrl={""} />}
+      rightComponent={<EmbedGoogleMap />}
+    />
+  );
 }
 
 export async function generateStaticParams() {

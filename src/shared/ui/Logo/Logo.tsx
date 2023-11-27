@@ -1,3 +1,4 @@
+"use client";
 import {
   Image,
   Link,

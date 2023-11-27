@@ -49,7 +49,7 @@ export const SearchField = forwardRef<HTMLInputElement, SearchFieldProps>(
             type="text"
             {...props}
             variant="clear"
-            placeholder="search params"
+            placeholder="Search params"
           />
           <Divider
             orientation="vertical"
@@ -64,7 +64,7 @@ export const SearchField = forwardRef<HTMLInputElement, SearchFieldProps>(
               id="hiddenSearchInput"
               type="text"
               ref={inputRef}
-              placeholder="location"
+              placeholder="Location"
               variant="clear"
             />
             <InputRightElement width="50px" h={"40px"}>
